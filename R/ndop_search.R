@@ -36,4 +36,7 @@ ndop_search <- function(search_payload){
                                 PHPSESSID = filter_page$cookies[1,"value"])
     cat(paste0(num_rec," records found\n"))
     return(filter_session_info)
+    
+    writeLines(as.character(filter_page_cont), "ndop_debug.html")
+    utils::browseURL("ndop_debug.html")
 }

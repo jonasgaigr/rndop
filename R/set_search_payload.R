@@ -141,6 +141,15 @@ set_search_payload <- function(
     if (hasArg(parametryZakresu) && !is.null(parametryZakresu)) {
         search_payload$parametryZakresu <- sf_to_ndop_json(parametryZakresu)
     }
+    
+    # Convert rfDatumOd and rfDatumDo if provided as Date
+    if (inherits(search_payload$rfDatumOd, "Date")) {
+      search_payload$rfDatumOd <- format(search_payload$rfDatumOd, "%d.%m.%Y")
+    }
+    
+    if (inherits(search_payload$rfDatumDo, "Date")) {
+      search_payload$rfDatumDo <- format(search_payload$rfDatumDo, "%d.%m.%Y")
+    }
 
     return(search_payload)
 }

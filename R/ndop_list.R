@@ -18,15 +18,13 @@
 #' # Example with table data
 #' ndop_list("group")
 
-ndop_list <- function(list_type){
-    if (list_type == "species") {
-       return(species_list)
-    }
-    if (list_type == "family") {
-       return(family_list)
-    }
-    if (list_type == "group") {
-       return(group_list)
-    }
+ndop_list <- function(list_type) {
+  list_type <- tolower(trimws(list_type))
+  if (list_type == "species") return(species_list)
+  if (list_type == "family") return(family_list)
+  if (list_type == "group") return(group_list)
+  
+  stop("Invalid list_type. Must be one of: 'species', 'family', 'group'.")
 }
+
 

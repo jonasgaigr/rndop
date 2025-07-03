@@ -43,16 +43,24 @@
 #' locs <- ndop_download("mantis religiosa", locations = 1)
 #' plot(locs[[1]]$geometry)
 
-ndop_download <- function(species = NULL, family = NULL, group = NULL, polygon = NULL, locations = 0, search_payload = NULL, num_rec_only = FALSE) {
-
+ndop_download <- function(species = NULL, family = NULL, group = NULL, polygon = NULL, locations = 0, search_payload = NULL, num_rec_only = FALSE, date_min = NULL, date_max = NULL) {
+  
+  date_min <- as_date_or_null(date_min, "date_min")
+  date_max <- as_date_or_null(date_max, "date_max")
+  
+  date_min <- if (!is.null(date_min)) format(date_min, "%d.%m.%Y") else NULL
+  date_max <- if (!is.null(date_max)) format(date_max, "%d.%m.%Y") else NULL
+  
     if (!hasArg(search_payload)) {
         search_payload <- set_search_payload(rfTaxon = species,
                                              rfCeledi = family,
                                              rfKategorie = group,
-                                             parametryZakresu = polygon)
-    } else {
+                                             parametryZakresu = polygon,
+                                             rfDatumOd = date_min,
+                                             rfDatumDo = date_max)
+        } else {
         cat("Using user payload\n")
-    }
+          }
 
     pagesize <- search_payload$pagesizeX
 
